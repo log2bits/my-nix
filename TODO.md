@@ -1,5 +1,4 @@
 - Resize boot/EFI partition to 1 GB
 - Fix taskbar
 - Find better icons
-- Retheme lock screen
 - Better cursor

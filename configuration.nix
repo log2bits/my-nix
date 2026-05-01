@@ -29,6 +29,8 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelParams = [ "nvidia-drm.modeset=1" "nvidia.NVreg_PreserveVideoMemoryAllocations=1" "pcie_aspm=off" ];
 
+  services.hardware.openrgb.enable = true;
+
   # NVIDIA
   hardware.nvidia = {
     open = true;
@@ -44,12 +46,6 @@
   # NETWORKING
   networking.hostName = "nixos";
   networking.networkmanager.enable = true;
-  hardware.mediatek-mt7927 = {
-    enable = true;
-    enableWifi = true;
-    enableBluetooth = true;
-    disableAspm = true;
-  };
 
   # LOCALE & TIME
   time.timeZone = "America/Los_Angeles";
@@ -62,6 +58,9 @@
     enable = true;
     wayland.enable = true;
   };
+  services.displayManager.autoLogin.enable = true;
+  services.displayManager.autoLogin.user = "logan";
+  services.displayManager.defaultSession = "plasma";
 
   # AUDIO
   security.rtkit.enable = true;
@@ -100,6 +99,8 @@
   environment.systemPackages = with pkgs; [
     git
     xauth
+    protonup-qt
+    mangohud
     # Better Blur DX: active fork of kwin-effects-forceblur (which was archived Nov 2025)
     # Forces blur on any window (Electron, GTK, Firefox) regardless of whether
     # the app requests it. Wayland only — drop the .x11 variant if you don't need X11.
@@ -121,6 +122,33 @@
   };
 
   home-manager.backupCommand = "rm";
+
+  networking.networkmanager.wifi.powersave = false;
+  hardware.wirelessRegulatoryDatabase = true;
+  hardware.enableRedistributableFirmware = true;
+
+  # GAMING
+  hardware.graphics = {
+    enable32Bit = true;
+  };
+
+  hardware.nvidia.prime = {
+    sync.enable = true;
+    nvidiaBusId = "PCI:1:0:0";
+    amdgpuBusId = "PCI:114:0:0";
+  };
+
+  programs.steam.enable = true;
+  programs.steam.gamescopeSession.enable = true;
+
+  environment.sessionVariables = {
+    STEAM_EXTRA_COMPAT_TOOLS_PATHS =
+      "\${HOME}/.steam/root/compatibilitytools.d";
+  };
+
+  programs.gamemode.enable = true;
+
+
 
   system.stateVersion = "25.11";
 }

@@ -44,9 +44,9 @@
     woeusb-ng
     ntfs3g
     iw
-
-    # Gaming
-    steam
+    python3
+    openssl
+    zip
 
     # KDE theming
     (pkgs.catppuccin-kde.override {
